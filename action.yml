@@ -14,6 +14,9 @@ inputs:
   common_env:
     description: "Common environments"
     required: true
+  app_values_path:
+    description: "Application environments"
+    required: true
   app:
     description: "Application name"
     required: true
@@ -47,4 +50,4 @@ runs:
 
     - name: Deploy
       run: |
-        helm upgrade -i -f .helm/values.yml -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
+        helm upgrade -i -f app_values_path -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app

@@ -30,6 +30,7 @@ jobs:
           version: ${{ github.event.deployment.description }}
           config: ${{ secrets.KUBE_CONFIG }}
           common_env: ${{ secrets.COMMON_ENV }}
+          app_values_path: .helm/values.yml
           app: ${{ secrets.APP_NAME }}
 
 ```
