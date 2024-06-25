@@ -24,7 +24,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: azure/setup-kubectl@v3
+    - uses: azure/setup-kubectl@v4
       name: Install kubectl
       id: install-kubectl
 
