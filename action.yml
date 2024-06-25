@@ -1,0 +1,50 @@
+name: "sitkoru/k8s-deployment-action"
+description: "Action to manage Kubernetes Deployments"
+branding:
+  icon: "package"
+  color: "blue"
+
+inputs:
+  version:
+    description: "Service version"
+    required: true
+  config:
+    description: "Kubernetes config"
+    required: true
+  common_env:
+    description: "Common environments"
+    required: true
+  app:
+    description: "Application name"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: azure/setup-kubectl@v3
+      name: Install kubectl
+      id: install-kubectl
+
+    - uses: azure/setup-helm@v4
+      name: Install helm
+      id: install-helm
+
+    - uses: Azure/k8s-set-context@v3
+      name: Set k8s context
+      with:
+        kubeconfig: ${{ inputs.config }}
+
+    - name: Install chart repo
+      run: |
+        helm repo add sitkoru https://sitkoru.github.io/helm-charts/
+        helm repo update
+
+    - name: Write common secret to file
+      run: |
+        cat << EOF > .helm/env.yml
+        ${{ inputs.common_env }}
+        EOF
+
+    - name: Deploy
+      run: |
+        helm upgrade -i -f .helm/values.yml -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
