@@ -53,4 +53,4 @@ runs:
     - name: Deploy
       shell: bash
       run: |
-        helm upgrade -i -f app_values_path -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
+        helm upgrade -i -f ${{ inputs.app_values_path }} -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
