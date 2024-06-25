@@ -50,11 +50,6 @@ runs:
         ${{ inputs.common_env }}
         EOF
 
-    - name: Log app name
-      shell: bash
-      run: |
-        echo ${{ inputs.app }} | sed 's/./& /g'
-
     - name: Deploy
       shell: bash
       run: |
