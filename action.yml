@@ -38,16 +38,19 @@ runs:
         kubeconfig: ${{ inputs.config }}
 
     - name: Install chart repo
+      shell: bash
       run: |
         helm repo add sitkoru https://sitkoru.github.io/helm-charts/
         helm repo update
 
     - name: Write common secret to file
+      shell: bash
       run: |
         cat << EOF > .helm/env.yml
         ${{ inputs.common_env }}
         EOF
 
     - name: Deploy
+      shell: bash
       run: |
         helm upgrade -i -f app_values_path -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
