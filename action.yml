@@ -32,7 +32,7 @@ runs:
       name: Install helm
       id: install-helm
 
-    - uses: Azure/k8s-set-context@v3
+    - uses: Azure/k8s-set-context@v4
       name: Set k8s context
       with:
         kubeconfig: ${{ inputs.config }}
