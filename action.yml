@@ -50,6 +50,11 @@ runs:
         ${{ inputs.common_env }}
         EOF
 
+    - name: Log app name
+      shell: bash
+      run: |
+        echo ${{ inputs.app }}
+
     - name: Deploy
       shell: bash
       run: |
