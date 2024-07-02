@@ -20,6 +20,9 @@ inputs:
   app:
     description: "Application name"
     required: true
+  namespace:
+    description: "Application namespace"
+    required: true
 
 runs:
   using: "composite"
@@ -53,4 +56,4 @@ runs:
     - name: Deploy
       shell: bash
       run: |
-        helm upgrade -i -f ${{ inputs.app_values_path }} -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n sitkoru sitkoru/dotnet-app
+        helm upgrade -i -f ${{ inputs.app_values_path }} -f .helm/env.yml --set image.tag=${{ inputs.version }} ${{ inputs.app }} -n ${{ inputs.namespace }} sitkoru/dotnet-app
